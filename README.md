@@ -1,6 +1,5 @@
 # focus-action
-
-### 统一移动端输入框获取焦点的行为，解决点击迟钝和键盘遮挡等问题。
+### 统一移动端输入框获取焦点的行为，解决点击不灵敏、迟钝和键盘遮挡等问题。
 ### unify the behavior of input box to get focus
 
 ## install
