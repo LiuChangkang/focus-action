@@ -1,8 +1,8 @@
 # focus-action
 
-###unify the behavior of input box to get focus
+### unify the behavior of input box to get focus
 
-##install
+## install
 ```
 npm install focus-action --save
 
@@ -11,8 +11,8 @@ npm install focus-action --save
 yarn add focus-action
 ```
 
-##Usage
-####Next, import the module in your application module:
+## Usage
+#### Next, import the module in your application module:
 ```
 import 'focus-action'
 
