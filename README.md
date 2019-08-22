@@ -18,7 +18,7 @@ import 'focus-action'
 
  or
 
-<script src="focusAction.min.js"></script>
+<script src="focus-action.min.js"></script>
 ```
 
 OK !
