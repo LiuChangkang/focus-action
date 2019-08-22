@@ -1,5 +1,6 @@
 # focus-action
 
+### 统一移动端输入框获取焦点的行为，解决点击迟钝和键盘遮挡等问题。
 ### unify the behavior of input box to get focus
 
 ## install
@@ -12,6 +13,7 @@ yarn add focus-action
 ```
 
 ## Usage
+
 Next, import the module in your application module:
 ```
 import 'focus-action'
@@ -21,4 +23,5 @@ import 'focus-action'
 <script src="focus-action.min.js"></script>
 ```
 
+通过挂载事件实现，引入库即可。
 OK !
