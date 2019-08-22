@@ -1,0 +1,16 @@
+{
+  "name": "focus-action",
+  "version": "0.1.0",
+  "description": "unify the behavior of input box to get focus",
+  "main": "focusAction.js",
+  "scripts": {
+    "test": "dev"
+  },
+  "keywords": [
+    "input",
+    "focus",
+    "javascript"
+  ],
+  "author": "LiuChangkang",
+  "license": "MIT"
+}
