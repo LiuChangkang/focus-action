@@ -1,10 +1,15 @@
 {
   "name": "focus-action",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "unify the behavior of input box to get focus",
-  "main": "focusAction.js",
+  "private": false,
+  "main": "src/focus-action.js",
   "scripts": {
-    "test": "dev"
+    "lib": "webpack --mode production"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/LiuChangkang/focus-action"
   },
   "keywords": [
     "input",
@@ -12,5 +17,10 @@
     "javascript"
   ],
   "author": "LiuChangkang",
-  "license": "MIT"
+  "license": "MIT",
+  "devDependencies": {
+    "uglifyjs-webpack-plugin": "^2.2.0",
+    "webpack": "^4.39.2",
+    "webpack-cli": "^3.3.7"
+  }
 }

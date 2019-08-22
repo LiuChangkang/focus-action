@@ -12,7 +12,7 @@ yarn add focus-action
 ```
 
 ## Usage
-#### Next, import the module in your application module:
+Next, import the module in your application module:
 ```
 import 'focus-action'
 
@@ -20,3 +20,5 @@ import 'focus-action'
 
 <script src="focusAction.min.js"></script>
 ```
+
+OK !
