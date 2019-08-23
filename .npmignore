@@ -3,10 +3,13 @@ node_modules/
 examples/
 packages/
 public/
-vue.config.js
+src/
+demo/
+webpack.config.js
 babel.config.js
 *.map
 *.html
+.gitignore
 
 # local env files
 .env.local

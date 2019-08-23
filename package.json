@@ -3,7 +3,7 @@
   "version": "0.2.0",
   "description": "unify the behavior of input box to get focus",
   "private": false,
-  "main": "src/focus-action.js",
+  "main": "dist/focus-action.min.js",
   "scripts": {
     "lib": "webpack --mode production"
   },
