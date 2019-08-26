@@ -39,7 +39,7 @@ window.addEventListener('DOMContentLoaded', function () {
     // 添加html向上偏移的class
     var style = document.createElement('style');
     style.type = 'text/css';
-    style.innerHTML = 'html.focus-action-up{transform:translate(0,-33vh);-webkit-transform:translate(0,-33vh)}';
+    style.innerHTML = 'body.focus-action-up{transform:translate(0,-33vh);-webkit-transform:translate(0,-33vh)}';
     document.head.appendChild(style);
 
     // 安卓弹出键盘发生窗口尺寸变化后元素在屏幕外就让元素滚动回可视区域
@@ -57,13 +57,16 @@ window.addEventListener('DOMContentLoaded', function () {
     // 有元素获取焦点后计算是否在可视区域，用在弹出键盘不改变窗口尺寸的情况下，所以代码发生在resize事件定时器后，添加向上移动的样式，并将焦点元素滚动至屏幕上半区
     document.addEventListener('focusin', function (e) {
       if (e.target.getBoundingClientRect().top < window.innerHeight / 5) { // 输入框离顶部近的时候移除样式
-        document.documentElement.classList.remove('focus-action-up');
+        document.body.classList.remove('focus-action-up');
       } else {
         waitResize = true; // 开始等待resize事件
         setTimeout(function () {
           if (waitResize && e.target.getBoundingClientRect().top > window.innerHeight / 2) { // 未等到resize事件且元素在下半屏幕
             waitResize = false; // 不用等resize了...
-            document.documentElement.classList.add('focus-action-up');
+            document.body.scrollTop += window.innerHeight / 3;
+            if (e.target.getBoundingClientRect().top > window.innerHeight / 2) {
+              document.body.classList.add('focus-action-up');
+            }
           }
         }, 500);
       }
@@ -72,9 +75,9 @@ window.addEventListener('DOMContentLoaded', function () {
     // 一个元素失去焦点后检测是否还有焦点元素，没有的话删除填充底部的样式
     document.addEventListener('focusout', function () {
       setTimeout(function () {
-        waitResize = false; // 切换input不监听resize
+        waitResize = false; // 切换input不监听resize,因为有resize的接口切换的时候不会再触发resize
         if (!document.querySelector(':focus'))
-          document.documentElement.classList.remove('focus-action-up');
+          document.body.classList.remove('focus-action-up');
       }, 9);
     });
   }
