@@ -1,6 +1,6 @@
 {
   "name": "focus-action",
-  "version": "0.3.9",
+  "version": "0.5.1",
   "description": "unify the behavior of input box to get focus",
   "private": false,
   "main": "src/focus-action.js",
