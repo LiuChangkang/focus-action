@@ -12,10 +12,24 @@ setTimeout(function () {
     return document.body.querySelector(':focus');
   }
 
+  // 判断焦点不触发高度变化的情况下输入框是否会被键盘遮挡
+  function noResizeViewFocusElemVisibility(el) {
+    if (window.orientation === undefined) {
+      return true;
+    }
+    var orientation = window.orientation;
+    // 横屏下输入框顶部高度小于三分之一屏幕为可见
+    if ((orientation === 90 || orientation === -90) && el.getBoundingClientRect().top < window.screen.height / 3) {
+      return true;
+    }
+    // 竖屏下输入框顶部距离小于（屏幕高度-屏幕宽度）为可见
+    return (orientation === 0 || orientation === 180) && el.getBoundingClientRect().top < window.screen.height - window.screen.width;
+  }
+
   // 有元素获取焦点时把元素，如果不在可视区域就将元素滚动至可视区域
   document.addEventListener('focusin', function (e) {
     setTimeout(function () {
-      if (e.target.getBoundingClientRect().bottom > window.innerHeight || e.target.getBoundingClientRect().top < 0) {
+      if (e.target === focusElem() && (e.target.getBoundingClientRect().bottom > window.innerHeight || e.target.getBoundingClientRect().top < 0)) {
         e.target.scrollIntoView(isAndroid);
       }
     }, 300);
@@ -41,41 +55,23 @@ setTimeout(function () {
         e.target.focus();
     });
   } else if (isAndroid) {
-    var statusBarHeight = window.screen.height - window.innerHeight; // 状态栏加导航栏的高度，固定值
-    var webHeightWithKeyboard = window.screen.height; // 设备屏幕高度去掉状态栏和导航栏的高度，也是带键盘的窗口高度
-
-    function computeHeight() {
-      webHeightWithKeyboard = window.screen.height - statusBarHeight;
-    }
-    computeHeight();
-
-    // 添加html向上偏移的class，作用于body直接子元素
     var style = document.createElement('style');
     style.type = 'text/css';
-    style.innerHTML = '@media screen and (min-device-aspect-ratio: ' + window.innerWidth + '/' + (webHeightWithKeyboard + 9) + '){body.focus-action-up>*{transform:translate(0,-80vw);-webkit-transform:translate(0,-80vw)}}';
     document.head.appendChild(style);
-
-    // 安卓弹出键盘发生窗口尺寸变化后元素在屏幕外就让元素滚动回可视区域
-    window.addEventListener('resize', function () {
-      setTimeout(computeHeight, 0);
-      var inputElem = focusElem();
-      if (inputElem) {
-        setTimeout(function () {
-          if (inputElem === focusElem() && inputElem.getBoundingClientRect().bottom > window.innerHeight)
-            inputElem.scrollIntoView(false);
-        }, 300);
-      }
-    });
+    style.innerHTML = 'body.focus-action-up>*{transform:translate(0,-300px);-webkit-transform:translate(0,-300px)}';
 
     // 有元素获取焦点后计算是否在可视区域，用在弹出键盘不改变窗口尺寸的情况下，所以代码发生在resize事件定时器后，添加向上移动的样式，并将焦点元素滚动至屏幕上半区
     document.addEventListener('focusin', function (e) {
+      var targetContentEditAble = e.target.getAttribute("contenteditable") === "" || e.target.getAttribute("contenteditable") === "true";
+      if (!/input|textarea/i.test(e.target.tagName) && !targetContentEditAble) return;
       if (document.body.classList.contains('focus-action-up') && e.target.getBoundingClientRect().top < window.innerHeight / 6) { // 输入框离顶部近的时候移除样式
         document.body.classList.remove('focus-action-up');
       } else {
+        var nowHeight = window.innerHeight;
         setTimeout(function () {
-          if (focusElem() === e.target && e.target.getBoundingClientRect().top > webHeightWithKeyboard / 2) { // 此刻元素在下半屏幕
-            document.body.scrollTop += e.target.getBoundingClientRect().top / 1.8;
-            if (e.target.getBoundingClientRect().top > webHeightWithKeyboard / 1.9) {
+          if (focusElem() === e.target && window.innerHeight === nowHeight && !noResizeViewFocusElemVisibility(e.target)) { // 未改变高度且此刻元素在下半屏幕
+            document.body.scrollTop += e.target.getBoundingClientRect().top / 2; // 可以滚动就滚动
+            if (!noResizeViewFocusElemVisibility(e.target)) {
               document.body.classList.add('focus-action-up');
             }
           }

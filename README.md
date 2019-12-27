@@ -22,11 +22,10 @@ import 'focus-action'
 <script src="focus-action.min.js"></script>
 ```
 
-通过挂载事件实现，引入库即可。
+通过纯挂载事件实现，引入库即可。
 OK !
 
 ## TIP
 ```
-安卓下如果输入框获取焦点时不发生窗口尺寸变化，则会在body的直接子元素上添加transform样式。
-建议webview弹出键盘时改变窗口高度。
+安卓下如果输入框获取焦点时不发生窗口尺寸变化，则会在body的直接子元素上添加transform样式，建议webview弹出键盘时改变窗口高度。
 ```
